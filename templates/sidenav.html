@@ -1,0 +1,53 @@
+<div class="topics">
+   
+    <ul class="topics__list">
+        <li>
+            <a href="{% url 'home' %}" class="active">Home</a>
+        </li>
+        <li>
+            <a href="{% url 'myprofile' %}" class="active">MyProfile</a>
+        </li>
+        <li>
+            <a href="{% url 'page-list' %}" class="active">Pages</a>
+        </li>
+        <li>
+            <a href="{% url 'post-list' %}" class="active">Page Posts</a>
+        </li>
+        <li>
+            <a href="{% url 'user-post-list' %}" class="active">User Posts</a>
+        </li>
+        <li>
+            <a href="{% url 'user-profile-list' %}" class="active">Friends</a>
+        </li>
+        <li>
+            <a href="{% url 'saved-posts' %}" class="active">Saved Page Posts</a>
+        </li>
+        <li>
+            <a href="{% url 'user-saved-posts' %}" class="active">Saved User Posts</a>
+        </li>
+        <li>
+            <a href="{% url 'about' %}" class="active">About Fy</a> 
+        </li>
+        <li>
+            <a href="{% url 'help' %}" class="active">Help</a> 
+        </li>
+        
+        <li>
+            <a href="{% url 'user_profile_change' %}" class="active">
+            Settings</a>
+        </li>
+       {% if request.user.is_authenticated %}
+       <li>
+        <a href="{% url 'logout' %}" class="active">Logout</a> 
+    </li>
+    {% else %}
+    <li>
+        <a href="{% url 'login' %}" class="active">Sign in</a> 
+    </li>
+
+    {% endif  %}
+       
+
+    </ul>
+
+</div>

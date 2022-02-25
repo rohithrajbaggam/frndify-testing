@@ -1,0 +1,59 @@
+
+
+{% extends 'base.html' %}
+{% load static %}
+{% block css_content %} 
+<link rel="stylesheet" href="{%static 'styles/post.css'%}">
+{% endblock %}
+{% block body_content %}
+<div class="profile">
+  <div class="profile__avatar">
+    <div class="avatar avatar--large active">
+      <img src="{{user_other.user_profile.profile_pic.url}}" />
+    </div>
+  </div>
+  <div class="profile__info">
+    <h3 style="color: aliceblue;">{{user_other.username}}</h3>
+    <div class="col-sm-8"> 
+      <h4>{{user_other.follower.count}} Following &nbsp;&nbsp; {{user_other.following.count}} Followers 
+        {% if user.is_authenticated %}
+        {% if not already_followed %}
+        <a href="{% url 'follow' username=user_other.username %}" class="btn btn-outline-info">Follow</a>
+        {% else %}
+        <a href="{% url 'unfollow' username=user_other.username %}" class="btn btn-outline-danger">Unfollow</a>
+        {% endif %}
+        {% endif %}
+      </h4>
+      </h3> 
+      <br>
+      <h6>{{ user_other.user_profile.bio}}</h6>
+  </div>
+    <br>
+    {% if  user_other.user_profile.full_name  %}
+    {%if user_other.user_profile.whatsapp%}
+    <a href="https://wa.me/{{user_other.user_profile.whatsapp}}" target="_blank"><img src="{%static 'logo/whatsapp.png'%}" style="height: 20px; width: 20px;" alt=""></a>&nbsp;&nbsp;</a>{% endif %}
+    {% if  user_other.user_profile.instagram_username %}
+    <a href="https://instagram.com/{{user_other.user_profile.instagram_username}}" target="_blank"><img src="{%static 'logo/instagram.png'%}" style="height: 20px; width: 20px;" alt=""></a>&nbsp;&nbsp;</a>{% endif %}
+    {%if user_other.user_profile.linkdin_profile_link%}
+    <a href="{{user_other.user_profile.linkdin_profile_link}}" target="_blank"><img src="{%static 'logo/linkedin.png'%}" style="height: 20px; width: 20px;" alt=""></a>&nbsp;&nbsp;</a>{% endif %}
+    {% if user_other.user_profile.gmail %}
+    <a href="mailto:{{user_other.user_profile.gmail}}" target="_blank"><img src="{%static 'logo/gmail.png'%}" style="height: 20px; width: 20px;" alt=""></a>&nbsp;&nbsp;</a>{% endif %}
+    {% if user_other.user_profile.facebook  %}
+    <a href="{{user_other.user_profile.facebook}}" target="_blank"><img src="{%static 'logo/fb.png'%}" style="height: 20px; width: 20px;" alt=""></a>&nbsp;&nbsp;</a>{% endif %}
+    {% endif %} <br>
+    {% if user_other.user_profile.full_name %}
+    <a href="{% url 'user-profile-detail' user_other.user_profile.id %}">more info</a>
+    {% endif %}
+    <br>
+  </div>
+  
+
+
+{% include 'pages/components/page_compo.html' %}
+{% include 'pages/components/page_post_compo.html' %}
+{% include 'pages/components/user_post_compo.html' %}
+
+</div>
+   
+   
+{% endblock  %}

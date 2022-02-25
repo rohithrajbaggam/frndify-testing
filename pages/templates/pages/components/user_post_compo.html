@@ -1,0 +1,58 @@
+{%load static%}
+
+  <div class="feeds">
+    <!-- -------------------------- Feed 1-------------------------- -->
+
+{% for post in userposts %}
+    <div class="feed" style="background-color: rgb(23, 2, 48); "> 
+        <div class="head">
+            <div class="user">
+              <a href="{%url 'user-other' username=post.posted_user.username %}">
+                <div class="profile-photo">
+                 
+                    <img src="/media/{{post.posted_user.user_profile.profile_pic}}">
+                </div>   <h3>{{ post.posted_user }}</h3>
+                <div class="ingo" style="float: right;">
+                    <small >{{ post.created|timesince }} ago</small></a>
+                </div>
+            </div>
+            <span class="edit">
+               <i class="uil uil-ellipsis-h"></i>
+            </span>
+        </div>
+        <a href="{% url 'user-post-detail' post.id %}">
+        <h2 style="color:aliceblue;" >{{ post.title }}</h2>
+        </a>
+        {% if post.img %}
+        <div class="photo">
+           
+            <img src="/media/{{post.img}}">
+        </div>
+        {% endif %}
+
+        <div class="action-buttons">
+            <div class="interaction-buttons">
+                <span><i class="uil uil-heart"></i></span>
+                <span><i class="uil uil-comment-dots"></i></span>
+                <span><i class="uil uil-share-alt"></i></span>
+            </div>
+            <div class="caption">
+              <a href="{% url 'user-post-detail' post.id %}">
+              <p style="color:aliceblue;">{{ post.content }}</p></a>
+          </div>
+     
+            <div class="bookmark">
+              {% if user.is_authenticated %}
+              {% if post.pk in user_save_post_list %}
+              <a href="{% url 'user-unsave' post.id %}" class="btn btn-danger"><img src="{%static 'logo/unbookmark.png'%}" alt="" style="height: 20px; width: 20px; float: right;"></a>
+              {% else %}
+              <a href="{% url 'user-save' post.id %}" class="btn btn-outline-info"><img src="{%static 'logo/bookmark.png'%}" alt="" style="height: 20px; width: 20px; float: right;"></a>
+              {% endif %}
+              {% endif %}
+            </div>
+        </div>  
+    </div>
+    <br><br>
+    {% endfor %}
+    
+  </div>

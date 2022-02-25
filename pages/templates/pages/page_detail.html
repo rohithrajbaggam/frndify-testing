@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{%load static %}
+{% block css_content %} 
+<link rel="stylesheet" href="{%static 'styles/post.css'%}">
+{% endblock %}
+
+
+{%block body_content%}
+{% if object.posted_user == user %}
+<a href="{%url 'page-update' object.id%}" class="btn btn-outline-info">Update</a>
+<a href="{%url 'page-delete' object.id%}" class="btn btn-outline-danger">Delete</a>
+<a href="{%url 'post-create' object.id%}" class="btn btn-outline-primary">Create Post</a>
+{% endif %}
+<article class="media content-section">
+  {% if object.page_profile %}
+  <img class="rounded-circle article-img" src="{{object.page_profile.url}}" alt="" style="border-radius: 10rem; height: 50px; width: 50px;">
+  {% endif %}
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">Name : {{ object.posted_user }}</a>
+        <small class="text-muted">{{ object.created }}</small>
+      </div>
+      <h2><a class="article-title" href="#">{{ object.page_title }}</a></h2>
+      <p class="article-content">{{ object.about }}</p>
+      <p class="article-content">{{ object.field }}</p>
+      <p class="article-content">{{ object.description }}</p>
+      <p class="article-content">{{ object.your_role }}</p>
+      <p class="article-content">{{ object.website }}</p>
+      <small>Social Media</small>
+      <a href="https://wa.me/{{object.whatsapp}}">whatsapp</a>
+      <a href="https://instagram.com/{{object.instagram}}">Insta</a>
+      <a href="{{object.linkdin_profile_link}}">linkdin</a>
+      <a href="mailto:{{object.email}}">email</a>
+      <a href="{{object.facebook}}">fb</a>
+    </div>
+  </article>
+ 
+
+{%endblock%}

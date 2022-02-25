@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block body_content %}
+<div class="layout__box" style="margin-top: 20px;">
+    <div class="layout__boxHeader">
+      <div class="layout__boxTitle">
+        <a href="{%url 'home'%}">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+            <title>arrow-left</title>
+            <path
+              d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z"
+            ></path>
+          </svg>
+        </a>
+        <h1>Suggestions</h1>
+      </div>
+    </div>
+
+    <div class="topics-page layout__body">
+      <ul class="topics__list">
+       
+            <li class="list-group-item list-group-item-light"><a href="{%url 'branch-cse'%}">CSE Suggestions</a></li>
+            <li class="list-group-item list-group-item-light"><a href="{%url 'AP'%}">state AP Suggestions</a></li>
+            <li class="list-group-item list-group-item-light"><a href="{%url 'telugu'%}">Telugu Suggestions</a></li>
+            <li class="list-group-item list-group-item-light"><a href="{%url 'zk-b'%}">Zakir-B Suggestions</a></li>
+           
+            {% if user.is_authenticated %}
+           <h3>Personal Suggestions</h3>
+           {% if user.user_profile.full_name %}
+           <li class="list-group-item list-group-item-light"><a href="{%url 'branch-sug' branch=user.user_profile.Branch%}">{{user.user_profile.Branch}}</a></li>
+           <li class="list-group-item list-group-item-light"><a href="{%url 'hostel-sug' hostel_name=user.user_profile.Hosteler_or_DayScholar%}">{{user.user_profile.Hosteler_or_DayScholar}}</a></li>
+           <li class="list-group-item list-group-item-light"><a href="{%url 'state-sug' state=user.user_profile.State%}">{{user.user_profile.State}}</a></li>
+           <li class="list-group-item list-group-item-light"><a href="{%url 'native-language-sug' Native_Language=user.user_profile.Native_Language%}">{{user.user_profile.Native_Language}}</a></li>
+           {% else %}
+           <p>Complete Profile to get requested suggestions</p>
+           <a href="{%url 'edit-profile'%}" class="btn btn-outline-info">fill Profile</a>
+           {% endif %}
+            {%endif%}
+      </ul>
+    </div>
+  </div>
+  {% endblock %}

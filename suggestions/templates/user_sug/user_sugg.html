@@ -1,0 +1,9 @@
+{%extends 'base.html'%}
+{% load static %}
+{% block css_content %}
+<link rel="stylesheet" href="{%static 'styles/post.css'%}">
+{% endblock  %}
+{%block body_content%}
+<h4>{{data}} Posts</h4> 
+{% include 'user_sug/user_prof_lop.html' %}
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+    <!-- -------------------------- -->
+{%load static%}
+{% block body_content %}
+
+  <div class="feeds">
+    <!-- -------------------------- Feed 1-------------------------- -->
+
+    {% for save in save_posts %}
+    <div class="feed" style="background-color: rgb(23, 2, 48); "> 
+        <div class="head">
+            <div class="user">
+              <a href="{%url 'page-profile' save.post.post_page.id save.post.post_page.page_title%}">
+                <div class="profile-photo"> 
+                 
+                    <img src="/media/{{save.post.post_page.page_profile}}">
+                </div>  <h3 >{{ save.post.post_page }}</h3> <br>
+                <div class="ingo" style="float: right;">
+                    <small >{{ save.post.created|timesince }} ago</small></a>
+                </div>
+            </div>
+            <span class="edit">
+               <i class="uil uil-ellipsis-h"></i>
+            </span>
+        </div>
+        <h2 > <a href="{%url 'post-detail' save.post.id%}" style="color:aliceblue;"> {{ save.post.title }}</a></h2>
+        {% if save.post.img %}
+        <div class="photo">
+            <img src="/media/{{save.post.img}}">
+        </div>
+        {% endif %}
+
+        <div class="action-buttons">
+            <div class="interaction-buttons">
+                <span><i class="uil uil-heart"></i></span>
+                <span><i class="uil uil-comment-dots"></i></span>
+                <span><i class="uil uil-share-alt"></i></span>
+            </div>
+            <div class="caption">
+              <p > <a href="{%url 'post-detail' save.post.id%}" style="color:aliceblue;"> {{ save.post.content }}</a></p>
+          </div>
+            <div class="bookmark">
+              {% if user.is_authenticated %}
+              {% if save.post.pk in save_post_list %}
+              <a href="{%url 'unsave' save.post.pk%}" class="btn btn-danger"><img src="{%static 'logo/unbookmark.png'%}" alt="" style="height: 20px; width: 20px;"></a>
+              {% else %}
+              <a href="{% url 'save' save.post.pk %}" class="btn btn-outline-info"><img src="{%static 'logo/bookmark.png'%}" alt="" style="height: 20px; width: 20px;"></a>
+              {% endif %}
+              {% endif %}
+            </div>
+        </div>   
+    </div>
+    <br><br>
+    {% endfor %}
+  </div>
+
+{% endblock %}

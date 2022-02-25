@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body_content %}
+<div class="profile">
+  
+  <a class="btn btn--main" href="{%url 'user-post-create'%}" style="float:right"> 
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+      <title>add</title>
+      <path
+        d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z">
+      </path>
+    </svg>
+     Post
+  </a>
+  <br><br>
+  <div class="profile__avatar">
+   
+    <div class="avatar avatar--large active">
+      <img src="{{user.user_profile.profile_pic.url}}" /> 
+    </div>
+    
+  </div>
+  <div class="profile__info">
+    <h3 style="color: aliceblue;">{{user.username}} </h3>
+    <h4>{{user.follower.count}} Following &nbsp;&nbsp; {{user.following.count}} Followers </h4>
+    {% if request.user == user %}
+    <a href="{% url 'edit-profile' %}" class="btn btn--main btn--pill">Edit Profile</a>
+    {% endif %}
+<br><br>
+   <div >
+    {% if  data.full_name  %}
+    {%if user.user_profile.whatsapp%}
+    <a href="https://wa.me/{{user.user_profile.whatsapp}}" target="_blank"><img src="{%static 'logo/whatsapp.png'%}" style="height: 20px; width: 20px;" alt=""></a>&nbsp;&nbsp;{% endif %}
+    {% if  user.user_profile.instagram_username %}
+    <a href="https://instagram.com/{{user.user_profile.instagram_username}}" target="_blank"><img src="{%static 'logo/instagram.png'%}" style="height: 20px; width: 20px;" alt=""></a>&nbsp;&nbsp;{% endif %}
+    {%if user.user_profile.linkdin_profile_link%}
+    <a href="{{user.user_profile.linkdin_profile_link}}" target="_blank"><img src="{%static 'logo/linkedin.png'%}" style="height: 20px; width: 20px;" alt=""></a>&nbsp;&nbsp;{% endif %}
+    {% if user.user_profile.gmail %}
+    <a href="mailto:{{user.user_profile.gmail}}" target="_blank"><img src="{%static 'logo/gmail.png'%}" style="height: 20px; width: 20px;" alt=""></a>&nbsp;&nbsp;{% endif %}
+    {% if user.user_profile.facebook  %}
+    <a href="{{user.user_profile.facebook}}" target="_blank"><img src="{%static 'logo/fb.png'%}" style="height: 20px; width: 20px;" alt=""></a>&nbsp;&nbsp;{% endif %}
+    {% endif %} <br>
+    {% if data.full_name %}
+    <a href="{% url 'user-profile-detail' data.id %}">more info</a>
+    {% else %}
+    <a href="{%url 'edit-profile'%}" class="btn btn-outline-info">fill Profile</a>
+    {% endif %}
+   </div>
+  </div>
+  <div class="profile__about"> 
+     
+
+  </div>
+
+
+{% include 'pages/components/page_post_compo.html' %}
+{% include 'pages/components/user_post_compo.html' %} 
+
+</div>
+    <!-- Topics Start -->
+    
+    <!-- Topics End -->
+
+    <!-- Room List Start -->
+   
+{% endblock  %}

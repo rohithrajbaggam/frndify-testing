@@ -1,0 +1,60 @@
+{% for data in user_profile_data %}
+
+{% if data.full_name %}
+<article class="media content-section">
+  <a href="{%url 'user-other' username=data.user %}">
+
+  <img class="rounded-circle article-img" src="/media/{{data.profile_pic}}" alt="" style="border-radius: 10rem; height: 50px; width: 50px;">
+  
+
+  </a>
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{%url 'user-other' username=data.user %}">{{ data.user }}</a>
+        <small class="text-muted">{{ data.Branch }}</small>
+      </div>
+      {% if data.full_name %}
+      <p> <b style="color: aliceblue;">Full Name : </b> &nbsp;&nbsp; {{ data.full_name }}</p>
+      {% endif %}
+      {% if data.Section %}
+      <p> <b style="color: aliceblue;">Branch : </b> &nbsp;&nbsp; {{data.Branch}} ,{{ data.Section }}</p>
+      {% endif %}
+      {% if data.Hosteler_or_DayScholar or data.Hostel_Room_No %}
+      <p> <b style="color: aliceblue;">Residency : </b> &nbsp;&nbsp; {{ data.Hosteler_or_DayScholar }}, {{data.Hostel_Room_No}}</p>
+      {% endif %}
+      {% if data.bio %}
+      <p> <b style="color: aliceblue;">Bio : </b> &nbsp;&nbsp; {{ data.bio }}</p>
+      {% endif %}
+      {% if data.Native_Language %}
+      <p> <b style="color: aliceblue;">Native Language : </b> &nbsp;&nbsp; {{ data.Native_Language }}</p>
+      {% endif %}
+      {% if data.Languages_Known %}
+      <p> <b style="color: aliceblue;">Languages Known</b> &nbsp;&nbsp; {{ data.Languages_Known }}</p>
+      {% endif %}
+      {% if data.Address %}
+      <p> <b style="color: aliceblue;">Address</b> &nbsp;&nbsp; {{ data.Address }}</p>
+      {% endif %}
+      {% if data.Country %}
+      <p> <b style="color: aliceblue;">State, Country</b> &nbsp;&nbsp; {{ data.State }}, {{data.Country}}</p>
+      {% endif %}
+      <hr>
+      {% if data.whatsapp or data.instagram_username or data.linkdin_profile_link or data.gmail or data.facebook  %}
+      <small>Social Media</small>
+      {% if data.whatsapp %}
+      <a href="https://wa.me/{{data.whatsapp}}">whatsapp</a>{% endif %}
+      {% if data.instagram_username %}
+      <a href="https://instagram.com/{{data.instagram_username}}">Insta</a>{% endif %}
+      {% if data.linkdin_profile_link %}
+      <a href="{{data.linkdin_profile_link}}">linkdin</a>{% endif %}
+      {% if data.gmail %}
+      <a href="mailto:{{data.gmail}}">email</a>{% endif %}
+      {% if data.facebook %}
+      <a href="{{data.facebook}}">fb</a>{% endif %}
+      {% endif %}
+    </div>
+  </a>
+  
+  
+  </article>
+  {% endif %}
+{% endfor %}

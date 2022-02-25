@@ -1,0 +1,53 @@
+
+{%load static%}
+
+  <div class="feeds">
+    <!-- -------------------------- Feed 1-------------------------- -->
+
+{% for post in posts %}
+    <div class="feed" style="background-color: rgb(23, 2, 48); ">
+        <div class="head"> 
+            <div class="user">
+              <a href="{%url 'page-profile' post.post_page.id post.post_page.page_title%}">
+                <div class="profile-photo">
+                 
+                    <img src="/media/{{post.post_page.page_profile}}">
+                </div>  <h3>{{ post.post_page }}</h3> 
+                <div class="ingo" style="float: right;">
+                    <small >{{ post.created|timesince }} ago</small></a>
+                </div>
+            </div>
+            <span class="edit">
+               <i class="uil uil-ellipsis-h"></i>
+            </span>
+        </div>
+        <a><a href="{% url 'post-detail' post.id %}" style="color:aliceblue;">{{ post.title }}</a></h2>
+        {% if post.img %}
+        <div class="photo">
+            <img src="/media/{{post.img}}">
+        </div>
+        {% endif %}
+
+        <div class="action-buttons">
+            <div class="interaction-buttons">
+                <span><i class="uil uil-heart"></i></span>
+                <span><i class="uil uil-comment-dots"></i></span>
+                <span><i class="uil uil-share-alt"></i></span>
+            </div>
+            <div class="caption">
+              <p><a href="{%url 'post-detail' post.id%}" style="color:aliceblue;">{{ post.content }}</a></p>
+          </div>
+            <div class="bookmark">
+              {% if user.is_authenticated %}
+              {% if post.pk in save_post_list %}
+              <a href="{% url 'unsave' post.id %}"><img src="{%static 'logo/unbookmark.png'%}" alt="" style="height: 20px; width: 20px;"></a>
+              {% else %}
+              <a href="{% url 'save' post.id %}"><img src="{%static 'logo/bookmark.png'%}" alt="" style="height: 20px; width: 20px;"></a>
+              {% endif %}
+              {% endif  %}
+            </div>
+        </div>   
+    </div>
+    <br><br>
+    {% endfor %}
+  </div>

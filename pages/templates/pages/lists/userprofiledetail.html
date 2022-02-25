@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{%load static %}
+{% block css_content %} 
+<link rel="stylesheet" href="{%static 'styles/post.css'%}">
+{% endblock %}
+
+
+{%block body_content%}
+{% if object.posted_user == user %}
+<a href="{%url 'page-update' object.id%}" class="btn btn-outline-info">Update</a>
+<a href="{%url 'page-delete' object.id%}" class="btn btn-outline-danger">Delete</a>
+<a href="{%url 'post-create' object.id%}" class="btn btn-outline-primary">Create Post</a>
+{% endif %}
+
+{% if data.full_name %} 
+<article class="media content-section">
+  <a href="{%url 'user-other' username=data.user %}">
+
+  <img class="rounded-circle article-img" src="/media/{{data.profile_pic}}" alt="" style="border-radius: 10rem; height: 50px; width: 50px;">
+  
+
+  </a>
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{%url 'user-other' username=data.user %}">{{ data.user }}</a>
+        <small class="text-muted">{{ data.Branch }}</small>
+      </div>
+      <p>{{ data.full_name }}</p>
+      <p>{{data.Branch}} ,{{ data.Section }}</p>
+      <p>{{ data.Hosteler_or_DayScholar }}, {{data.Hostel_Room_No}}</p>
+      <p>{{ data.bio }}</p>
+      <p>{{ data.Native_Language }}</p>
+      <p>{{ data.Languages_Known }}</p>
+      <p>{{ data.Address }}</p>
+      <p>{{ data.State }}, {{data.Country}}</p>
+      <hr>
+      <small>Social Media</small>
+      <a href="https://wa.me/{{page.whatsapp}}">whatsapp</a>
+      <a href="https://instagram.com/{{page.instagram_username}}">Insta</a>
+      <a href="{{page.linkdin_profile_link}}">linkdin</a>
+      <a href="mailto:{{page.gmail}}">email</a>
+      <a href="{{page.facebook}}">fb</a>
+    </div>
+  </a>
+  
+  
+  </article>
+
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,70 @@
+
+{% extends 'base.html' %}
+
+{%block body_content%}
+
+
+{%load static%}
+
+  <div class="feeds">
+    <!-- -------------------------- Feed 1-------------------------- -->
+    {% if object.posted_user == user %}
+    <a href="{%url 'user-post-update' object.pk%}" class="btn btn-outline-info">Update</a>
+    <a href="{%url 'user-post-delete' object.pk%}" class="btn btn-outline-danger">Delete</a>
+    {% endif %}
+    <div class="feed" style="background-color: rgb(23, 2, 48); ">
+        <div class="head">
+            <div class="user">
+              <a href="{%url 'user-other' username=object.posted_user.username %}">
+                <div class="profile-photo">
+                 
+                    <img src="/media/{{object.posted_user.user_profile.profile_pic}}">
+                </div>
+                <div class="ingo" >
+
+                    <h3 style="float: left;">{{ object.posted_user }}</h3>
+
+                    <small >{{ object.created|timesince }} ago</small>
+                </div></a>
+            </div>
+            <span class="edit">
+               <i class="uil uil-ellipsis-h"></i>
+            </span>
+        </div>
+        <a href="{% url 'user-post-detail' object.id %}">
+        <h2>{{ object.title }}</h2>
+        </a>
+        {% if object.img %}
+        <div class="photo">
+           
+            <img src="/media/{{object.img}}">
+        </div>
+        {% endif %}
+
+        <div class="action-buttons">
+            <div class="interaction-buttons">
+                <span><i class="uil uil-heart"></i></span>
+                <span><i class="uil uil-comment-dots"></i></span>
+                <span><i class="uil uil-share-alt"></i></span>
+            </div>
+            <div class="caption">
+              <a href="{% url 'user-post-detail' object.id %}">
+              <p>{{ object.content }}</p></a>
+          </div>
+     
+            <div class="bookmark">
+              {% if user.is_authenticated %}
+              {% if object.pk in user_save_post_list %}
+              <a href="{% url 'user-unsave' object.id %}" class="btn btn-danger"><img src="{%static 'logo/unbookmark.png'%}" alt="" style="height: 20px; width: 20px; float: right;"></a>
+              {% else %}
+              <a href="{% url 'user-save' object.id %}" class="btn btn-outline-info"><img src="{%static 'logo/bookmark.png'%}" alt="" style="height: 20px; width: 20px; float: right;"></a>
+              {% endif %}
+              {% endif %}
+            </div>
+        </div>  
+    </div>
+   
+   
+  </div>
+
+  {%endblock %}

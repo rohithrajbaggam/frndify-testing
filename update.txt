@@ -1,0 +1,23 @@
+user 
+    -> UserProfile - Update, view
+    -> Page - crub
+        -> Post - crub 
+
+
+Profile -> myprofile, user-profile 
+Page -> Page-list
+     -> Page-Detail-view as page profile 
+
+Post -> Post-lsit 
+     -> Post-List-view as update, delete
+
+pending -> username, Email, Password CRUD -> done
+
+
+save follow
+
+requirement.txt file is uploaded 
+
+API and Front end is pending 
+
+Bug at page post upload in img 

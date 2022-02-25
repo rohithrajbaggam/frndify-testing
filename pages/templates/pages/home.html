@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{%load static %}
+{% block css_content %} 
+<link rel="stylesheet" href="{%static 'styles/post.css'%}">
+{% endblock %}
+
+{%block body_content%} 
+
+{% include 'pages/components/page_post_compo.html' %}
+{% if user.is_authenticated %}
+{% include 'pages/components/user_post_compo.html' %}
+{% endif %}
+
+{% endblock %}

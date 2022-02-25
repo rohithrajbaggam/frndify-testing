@@ -1,0 +1,28 @@
+<div class="topics">
+   <h2 style="color: rgb(255, 255, 255);"><b>Suggestions</b></h2>
+    <br>
+  <ul class="topics__list">
+    <h3>Popular Suggestions</h3>
+    <br>
+    <li><a href="{%url 'branch-cse'%}" style="color: rgb(93, 96, 97);">CSE Suggestions</a></li>
+    <li><a href="{%url 'AP'%}" style="color: rgb(93, 96, 97);">state AP Suggestions</a></li>
+    <li><a href="{%url 'telugu'%}" style="color: rgb(93, 96, 97);">Telugu Suggestions</a></li>
+    <li><a href="{%url 'zk-b'%}" style="color: rgb(93, 96, 97);">Zakir-B Suggestions</a></li>
+    
+    {% if user.is_authenticated %}
+    <h3>Personal Suggestions</h3>
+    <br>
+    {% if user.user_profile.full_name %}
+    <li><a href="{%url 'branch-sug' branch=user.user_profile.Branch%}" style="color: rgb(93, 96, 97);">{{user.user_profile.Branch}} Suggestions</a></li>
+    <li><a href="{%url 'hostel-sug' hostel_name=user.user_profile.Hosteler_or_DayScholar%}" style="color: rgb(93, 96, 97);">{{user.user_profile.Hosteler_or_DayScholar}} Suggestions</a></li>
+    <li><a href="{%url 'state-sug' state=user.user_profile.State%}" style="color: rgb(93, 96, 97);">{{user.user_profile.State}} Suggestions</a></li>
+    <li><a href="{%url 'native-language-sug' Native_Language=user.user_profile.Native_Language%}" style="color: rgb(93, 96, 97);">{{user.user_profile.Native_Language}} Suggestions</a></li>
+    {% else %}
+    <p>Complete Profile to get requested suggestions</p>
+    <a href="{%url 'edit-profile'%}" class="btn btn-outline-info">fill Profile</a>
+    {% endif %}
+    {%endif%}
+
+  </ul>
+
+</div>

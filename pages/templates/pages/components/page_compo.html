@@ -1,0 +1,44 @@
+
+{%load static%}
+
+  <div class="feeds">
+    <!-- -------------------------- Feed 1-------------------------- -->
+
+    {% for page in pages %}
+    <div class="feed" style="background-color: rgb(23, 2, 48); ">
+        <div class="head"> 
+            <div class="user">
+              <a href="{%url 'page-profile' page.id page.page_title%}">
+                <div class="profile-photo">
+                 
+                    <img src="{{page.page_profile.url}}">
+                </div>  <h3>{{ page.page_title }}</h3> 
+                <div class="ingo" style="float: right;">
+                    <small >{{ page.created|timesince }} ago</small></a>
+                </div>
+            </div>
+            <span class="edit">
+               <i class="uil uil-ellipsis-h"></i>
+            </span>
+        </div>
+        <a><a href="{% url 'page-detail' page.id %}" style="color:aliceblue;">{{ page.about }}</a></h2>
+        {% if page.page_profile.url %}
+        <div class="photo" >
+            <img src="{{page.page_profile.url}}" style="height: 400px;">
+        </div>
+        {% endif %}
+
+        <div class="action-buttons">
+            <div class="interaction-buttons">
+                <span><i class="uil uil-heart"></i></span>
+                <span><i class="uil uil-comment-dots"></i></span>
+                <span><i class="uil uil-share-alt"></i></span>
+            </div>
+            <div class="caption">
+              <p><a href="{% url 'page-detail' page.id %}" style="color:aliceblue;">{{ page.description }}</a></p>
+          </div>
+        </div>   
+    </div>
+    <br><br>
+    {% endfor %}
+  </div>
