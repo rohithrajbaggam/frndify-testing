@@ -247,7 +247,9 @@ def save_post(request, pk):
     if not already_saved:
         savepost = SavePost(post=post, user=request.user)
         savepost.save()
-    return redirect('saved-posts')
+    return redirect('post-detail', pk=post.id)
+    # return redirect('room', pk=room.id)
+
     # return HttpResponseRedirect(reverse('post-detail', args=[str(pk)]))
 
 
@@ -256,7 +258,7 @@ def unsave_post(request, pk):
     post = Post.objects.get(pk=pk)
     already_saved = SavePost.objects.filter(post=post, user=request.user)
     already_saved.delete()
-    return redirect('home')
+    return redirect('post-detail', pk=post.id) 
 
 
 

@@ -248,7 +248,7 @@ def user_save_post(request, pk):
     if not already_saved:
         savepost = UserSavePost(post=post, user=request.user)
         savepost.save()
-    return redirect('user-saved-posts')
+    return redirect('user-post-detail', pk=post.id)
 
 
 @login_required(login_url='login')
@@ -256,7 +256,7 @@ def user_unsave_post(request, pk):
     post = UserPost.objects.get(pk=pk)
     already_saved = UserSavePost.objects.filter(post=post, user=request.user)
     already_saved.delete()
-    return redirect('home')
+    return redirect('user-post-detail', pk=post.id)
 
 
 
