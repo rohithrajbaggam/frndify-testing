@@ -18,7 +18,7 @@ class UserSavedPostSerializer(ModelSerializer):
 
 class PageSerializer(ModelSerializer):
     class Meta:
-        model = Page 
+        model = Page  
         fields = '__all__'
 
 

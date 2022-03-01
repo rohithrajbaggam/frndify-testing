@@ -6,6 +6,7 @@
 {% block body_content %}
  
         <div class="profile">
+          {% if request.user == page.posted_user %}
           <a class="btn btn--main" href="{%url 'post-create' page.id%}" style="float: right;">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
               <title>add</title>
@@ -15,6 +16,7 @@
             </svg>
              Post
           </a> <br><br>
+          {% endif %}
           <div class="profile__avatar">
             <div class="avatar avatar--large active">
               <img src="{{page.page_profile.url}}" />

@@ -23,18 +23,21 @@ def home(request):
         'pages' : pages,
         'posts' : posts,
         'save_post' : save_post,
-        'save_post_list' : save_post_list,
+        'save_post_list' : save_post_list, 
         'userposts' : userposts,
         'save_post_list' : save_post_list,
         'user_save_post_list' : user_save_post_list,
         }
-        return render(request, 'pages/home.html', context)
-    context = {
+        return render(request, 'pages/home.html', context)    
+
+
+    else:
+        context = {
             'pages' : pages,
             'posts' : posts,
 
         }
-       
+
     return render(request, 'pages/home.html', context)
 
 
@@ -110,7 +113,7 @@ class PageUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return False 
 
 
-
+ 
 class PageDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Page 
     success_url = '/'
@@ -155,7 +158,7 @@ def PostCreateView(request, pk):
         return HttpResponse('<h1>Your are allowed to create Post,Only admin can post..!<h1/>')
     else:
         if request.method == 'POST':
-            form = CreatePostForm(request.POST)
+            form = CreatePostForm(request.POST, request.FILES)
             if form.is_valid():
                 post = form.save(commit=False)
                 post.post_author = request.user
