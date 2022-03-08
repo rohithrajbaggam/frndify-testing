@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-7divxbb$uvo^$q*rwt)#7n-kl2i+s#0zp3c0%-+bz%lyxa@+ae
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['frndify.azurewebsites.net']
 
 
 # Application definition
@@ -49,9 +49,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-
-
-
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -138,6 +136,9 @@ LOGIN_REDIRECT_URL = 'home'
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'

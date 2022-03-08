@@ -1,10 +1,12 @@
 from django.shortcuts import redirect, render, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
+from django.http import HttpResponse
+from itertools import chain
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import CreateNewUser, EditProfile, UserProfileChange
-from .models import UserProfile, Follow, UserPost, UserSavePost
+from .forms import CreateNewUser, EditProfile, UserProfileChange, CreateMessageForm
+from .models import UserProfile, Follow, UserPost, UserSavePost, Messages
 from pages.models import Page, Post, SavePost
 from django.contrib.auth.forms import  PasswordChangeForm
 from django.views.generic import  ListView, CreateView, UpdateView, DeleteView 
@@ -158,6 +160,9 @@ def unfollow(request, username):
     already_following.delete()
     return HttpResponseRedirect(reverse('user-other', kwargs={'username':username}))
 
+
+
+
 # user post views 
 
 class UserPostListView(ListView):
@@ -209,7 +214,7 @@ class UserPostCreateView(LoginRequiredMixin, CreateView):
     model = UserPost 
     fields = ['title', 'img', 'content']
 
-    def form_valid(self, form):
+    def form_valid(self,form):
         form.instance.posted_user = self.request.user 
         return super().form_valid(form)
 
@@ -269,3 +274,58 @@ def usersavedPostList(request):
         'user_save_post_list' : save_post_list, 
     }
     return render(request, 'users/post/usersavedposts.html', context)
+
+
+@login_required(login_url="login")
+def message_user(request, username):
+    msg_user = User.objects.get(username=username)
+    if request.user == msg_user:
+        return redirect("myprofile")
+    form = CreateMessageForm()
+    if request.method == 'POST':
+       form = CreateMessageForm(request.POST)
+       if form.is_valid():
+           msg = form.save(commit=False)
+           msg.req_user = request.user
+           msg.user_other = msg_user
+           msg.save()
+           return redirect("message_user", username=username)
+    if username == msg_user.username:
+        msgs = Messages.objects.filter(req_user=request.user ,user_other=msg_user).order_by("-sent")
+        my_msgs = Messages.objects.filter(req_user=msg_user, user_other=request.user).order_by("-sent")
+        # message_order = msgs + my_msgs
+        message_order = sorted(chain(msgs, my_msgs), key=lambda msg : msg.sent, reverse=False)
+        context = {
+            "msg_user" : msg_user,
+            "msg_user_id" : msg_user.username,
+            "msgs" : msgs,
+            "my_msgs" : my_msgs,
+            "my_msgs_id" : request.user,
+            "form" : form, 
+            "message_order" : message_order,
+        }
+    else:
+        context = {
+            "msg_user" : msg_user,
+            "form" : form,
+        }
+    return render(request, "msg_user.html", context)
+
+
+@login_required(login_url="login")
+def delete_message_page(request, username, pk):
+    msg_user = User.objects.get(username=username)
+    my_msgs = Messages.objects.get(pk=pk)
+    if request.user == msg_user:
+        message = Messages.objects.get(pk=pk)
+        if request.method == 'POST':
+            message.delete()
+            return redirect("message_user", username=my_msgs.user_other)  
+        else:
+            context = {
+                "my_msgs" : my_msgs,
+                "message" : message,
+            }
+            return render(request, "delete_message_page.html", context)
+    else:
+        return HttpResponse("You don't have access to delete this post")

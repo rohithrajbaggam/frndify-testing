@@ -1,7 +1,7 @@
 from django import forms 
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User 
-from .models import UserProfile
+from .models import UserProfile, Messages
 # from pages.models import Post
  
 class CreateNewUser(UserCreationForm):
@@ -33,3 +33,9 @@ class UserProfileChange(UserChangeForm):
     class Meta:
         model = User 
         fields = ('username', 'email', 'password')
+
+
+class CreateMessageForm(forms.ModelForm):
+    class Meta:
+        model = Messages
+        exclude = ('sent', 'req_user', 'user_other')

@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.contrib.auth import views as auth_views
 from django.urls import path 
 from . import views 
@@ -44,8 +45,11 @@ urlpatterns = [
     path('follow/<username>/', views.follow, name='follow'),
     path('unfollow/<username>/', views.unfollow, name='unfollow'),
 
-    path('user/saved-posts/', views.usersavedPostList, name='user-saved-posts'),
+    path('user/saved-posts/', views.usersavedPostList, name='user-saved-posts'), 
     path('user/Save/<pk>/', views.user_save_post, name='user-save' ),
     path('user/Unsave/<pk>/', views.user_unsave_post, name='user-unsave'),
+    path("message_user/<str:username>/", views.message_user, name="message_user"),
+    path("message_user/delete_message_page/<str:username>/<int:pk>/", views.delete_message_page, name="delete_message_page"),
+
 
 ]

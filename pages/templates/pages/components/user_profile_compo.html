@@ -3,11 +3,12 @@
 {% if data.full_name %}
 <article class="media content-section">
   <a href="{%url 'user-other' username=data.user %}">
-
   <img class="rounded-circle article-img" src="/media/{{data.profile_pic}}" alt="" style="border-radius: 10rem; height: 50px; width: 50px;">
-  
-
   </a>
+  {% if request.user == data.user %}
+  {%  else %}
+  <a href="{%url 'message_user' data.user.username %}">message</a>
+  {% endif %}
     <div class="media-body">
       <div class="article-metadata">
         <a class="mr-2" href="{%url 'user-other' username=data.user %}">{{ data.user }}</a>

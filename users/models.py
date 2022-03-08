@@ -101,7 +101,7 @@ class Follow(models.Model):
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
 
     def __str__(self):
-        return f'{self.follower} follows {self.following}'
+        return f'{self.following}' 
 
 
 
@@ -132,3 +132,15 @@ class UserSavePost(models.Model):
 
     def __str__(self):
         return f'{self.user} Save {self.post} '
+
+
+class Messages(models.Model):
+    req_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="req_user") # request user
+    user_other = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_other")
+    msg_data = models.CharField(max_length=500, blank=True)
+    # msg_img = models.ImageField(upload_to='chatings')
+    sent = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return f'{self.req_user} - {self.user_other}'

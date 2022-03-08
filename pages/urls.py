@@ -5,6 +5,7 @@ from .views import (PageListView, PageDetailView, PageCreateView, PageUpdateView
                      PostDeleteView ) 
 urlpatterns = [ 
     path('', views.home, name='home'),
+    path('allposts/', views.all_posts, name='all_posts'),
     path('about/', views.about, name='about'),
     path('apilist/', views.apilistview, name='api-list'),
     path('help/', views.help, name='help'),

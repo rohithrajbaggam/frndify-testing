@@ -8,7 +8,28 @@ from users.models import UserPost, Follow, UserSavePost, UserProfile
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView 
 from django.contrib.auth.decorators import login_required
+from itertools import chain
 # Create your views here.
+
+def all_posts(request):
+    pages_posts = Post.objects.all()
+    users_posts = UserPost.objects.all()
+    posts = [] 
+    posts += pages_posts
+    posts += users_posts
+    post_list = sorted(chain(pages_posts, users_posts), key=lambda post : post.created, reverse=True)
+    context = {
+        'pages_posts' : pages_posts,
+        'users_posts' : users_posts,
+        'posts' : posts,
+        'post_list' : post_list,
+    }
+
+        # cars_list = sorted(
+        # chain(bmws, teslas),
+        # key=lambda car: car.created, reverse=True)    
+    return render(request, 'all_posts.html', context)
+
 def home(request):
     pages = Page.objects.all()
     posts = Post.objects.all()
@@ -151,7 +172,7 @@ def page_profile(request, pk, page_title):
 
 
 @login_required(login_url='login')
-def PostCreateView(request, pk):
+def PostCreateView(request, pk): 
     form = CreatePostForm()
     page_rel = Page.objects.get(id=pk)
     if request.user != page_rel.posted_user:
@@ -323,3 +344,6 @@ def apilistview(request):
 #             form = EditProfile(instance=current_user)
 #             return redirect('home')
 #     return render(request, 'users/profile.html', context={'title':'edit-profile', 'form':form})
+
+
+

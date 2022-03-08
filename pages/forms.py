@@ -31,4 +31,7 @@ class CreatePostForm(forms.ModelForm):
     class Meta:
         model = Post 
         fields = '__all__'
-        exclude = ['post_page', 'post_author', 'updated', 'created']
+        exclude = ['post_page', 'post_author', 'updated', 'created'] 
+
+
+

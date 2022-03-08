@@ -15,13 +15,15 @@
   <div class="profile__info">
     <h3 style="color: aliceblue;">{{user_other.username}}</h3>
     <div class="col-sm-8"> 
-      <h4>{{user_other.follower.count}} Following &nbsp;&nbsp; {{user_other.following.count}} Followers 
+      <h4>{{user_other.follower.count}} Following &nbsp;&nbsp; {{user_other.following.count}}  Followers
         {% if user.is_authenticated %}
+        
         {% if not already_followed %}
         <a href="{% url 'follow' username=user_other.username %}" class="btn btn-outline-info">Follow</a>
         {% else %}
         <a href="{% url 'unfollow' username=user_other.username %}" class="btn btn-outline-danger">Unfollow</a>
-        {% endif %}
+        {% endif %} <br>
+        <a href="{%url 'message_user' user_other.username %}">Message</a>
         {% endif %}
       </h4>
       </h3> 
