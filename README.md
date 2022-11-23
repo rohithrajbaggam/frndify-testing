@@ -1,2 +1,1 @@
-# frndify-testing
-# frndify-testing
+# frndify movie APP
